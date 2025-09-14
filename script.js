@@ -115,9 +115,21 @@ orderForm.addEventListener('submit',async function(e){
   bookBtn.disabled=true;
   bookBtn.textContent='Book now';
 
+  // Message elements
+  const bookingMsg = document.getElementById('bookingMessage');
+  const emailMsg = document.getElementById('emailMessage');
+  bookingMsg.textContent = '';
+  emailMsg.textContent = '';
+
   try{
     await sendBookingEmail(orderForm);
-    alert(`Booking confirmed — Order ID: ${orderId}\nA confirmation has been sent to ${email.value}.`);
+    bookingMsg.textContent = 'Thank you For Booking the Service. We will get back to you soon!';
+    emailMsg.textContent = `Confirmation mail has been sent to ${email.value}.`;
+    // Remove messages after 15 seconds
+    setTimeout(() => {
+      bookingMsg.textContent = '';
+      emailMsg.textContent = '';
+    }, 15000);
     orderForm.reset();
     cart.clear();
     renderServices();
@@ -125,7 +137,8 @@ orderForm.addEventListener('submit',async function(e){
     checkBookState();
   }catch(err){
     console.error(err);
-    alert('Failed to send booking. Please try again.');
+    bookingMsg.textContent = 'Failed to send booking. Please try again.';
+    emailMsg.textContent = '';
     bookBtn.disabled=false;
     bookBtn.textContent=prevText;
   }
@@ -149,5 +162,4 @@ scrollServices?.addEventListener('click',()=>{
 });
 
 renderServices();
-
 renderCart();
