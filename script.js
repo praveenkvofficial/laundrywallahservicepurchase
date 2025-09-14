@@ -113,7 +113,7 @@ orderForm.addEventListener('submit',async function(e){
 
   const prevText=bookBtn.textContent;
   bookBtn.disabled=true;
-  bookBtn.textContent='Sending...';
+  bookBtn.textContent='Book now';
 
   try{
     await sendBookingEmail(orderForm);
@@ -149,4 +149,5 @@ scrollServices?.addEventListener('click',()=>{
 });
 
 renderServices();
+
 renderCart();
